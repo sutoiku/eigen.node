@@ -1,0 +1,27 @@
+{
+  "name": "eigen.node",
+  "version": "0.0.1",
+  "description": "Eigen C++ library bindings for Node.js",
+  "license": "MIT",
+  "keywords": [],
+  "main": "./index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sutoiku/eigen.node"
+  },
+  "dependencies": {
+    "bindings": "^1.2.1",
+    "nan": "^2.4.0"
+  },
+  "devDependencies": {
+    "chai": "*",
+    "chai-shallow-deep-almost-equal": "^1.3.0",
+    "eslint": "*",
+    "eslint-config-bestpractices": "*",
+    "eslint-plugin-stoic": "sutoiku/eslint-plugin-stoic",
+    "jshint": "^2.9.1",
+    "mocha": "*",
+    "mocha-jenkins-reporter": "*"
+  },
+  "gypfile": true
+}
