@@ -12,7 +12,8 @@
       "include_dirs": [
         "<(src_dir)",
         "<!(node -e \"require('nan')\")",
-        "/usr/local/include/eigen3"
+        "/usr/local/include/eigen3",
+        "/usr/include/eigen3"
       ],
       "configurations": {
         "Debug": {
