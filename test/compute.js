@@ -49,5 +49,25 @@ describe('Compute', function() {
       { real: 0.6217, imag: -0.137  }
     ]);
   });
+
+  it('Should properly compute cholesky of [[25, 15, -5], [15, 18, 0], [-5, 0, 11]]', function() {
+    const module = require('../index.js');
+
+    const A = [[25, 15, -5], [15, 18, 0], [-5, 0, 11]];
+
+    const e = module.cholesky(A);
+
+    expect(e).to.shallowDeepAlmostEqual([[5,3,-1],[0,3,1],[0,0,3]]);
+  });
+
+  it('Should properly compute cholesky of [[4, 12, -16], [12, 37, -43], [-16, -43, 98]]', function() {
+    const module = require('../index.js');
+
+    const A = [[4, 12, -16], [12, 37, -43], [-16, -43, 98]];
+
+    const e = module.cholesky(A);
+
+    expect(e).to.shallowDeepAlmostEqual([[2,6,-8],[0,1,5],[0,0,3]]);
+  });
 });
 

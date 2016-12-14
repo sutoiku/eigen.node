@@ -32,9 +32,43 @@ NAN_METHOD(values) {
   info.GetReturnValue().Set(outArray);
 }
 
+NAN_METHOD(cholesky) {
+  auto array = info[0].As<v8::Array>();
+  const size_t size = array->Length();
+  Eigen::MatrixXd matrix(size, size);
+
+  for (size_t row = 0; row < size; ++row) {
+    auto rowArray = Nan::Get(array, row).ToLocalChecked().As<v8::Array>();
+    for (size_t col = 0; col < size; ++col) {
+      matrix(row, col) =
+          Nan::To<double>(Nan::Get(rowArray, col).ToLocalChecked()).FromJust();
+    }
+  }
+
+  Eigen::MatrixXd L = matrix.llt().matrixU();
+
+  const size_t outRows = L.rows();
+  const size_t outColumns = L.cols();
+
+  v8::Local<v8::Array> outMatrix = Nan::New<v8::Array>(outRows);
+  for (size_t i = 0; i < outRows; ++i) {
+    v8::Local<v8::Array> row = Nan::New<v8::Array>(outColumns);
+
+    for (size_t j = 0; j < outColumns; ++j) {
+      Nan::Set(row, j, Nan::New(L(i,j)));
+    }
+
+    Nan::Set(outMatrix, i, row);
+  }
+  info.GetReturnValue().Set(outMatrix);
+}
+
 NAN_MODULE_INIT(target) {
   Nan::Set(target, Nan::New("values").ToLocalChecked(),
            Nan::GetFunction(Nan::New<v8::FunctionTemplate>(values))
+               .ToLocalChecked());
+  Nan::Set(target, Nan::New("cholesky").ToLocalChecked(),
+           Nan::GetFunction(Nan::New<v8::FunctionTemplate>(cholesky))
                .ToLocalChecked());
 }
 
