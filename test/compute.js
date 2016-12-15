@@ -69,5 +69,28 @@ describe('Compute', function() {
 
     expect(e).to.shallowDeepAlmostEqual([[2,6,-8],[0,1,5],[0,0,3]]);
   });
+
+  it('Should properly throw error for [[0,1],[1,0]]', function() {
+    const module = require('../index.js');
+
+    const A = [[0,1],[1,0]];
+
+
+    expect(function(){
+      module.cholesky(A);
+    }).to.throw(Error, /Cholesky requires a positive definite matrix/);
+  });
+
+  it('Should properly throw error for [[0,1],[0,0]]', function() {
+    const module = require('../index.js');
+
+    const A = [[0,1],[0,0]];
+
+
+    expect(function(){
+      module.cholesky(A);
+    }).to.throw(Error, /Cholesky requires a symmetric matrix/);
+  });
+
 });
 
